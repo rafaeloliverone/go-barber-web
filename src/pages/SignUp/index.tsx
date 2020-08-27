@@ -4,7 +4,7 @@ import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
 
-import getValidationErros from '../../utils/getValidationErrors';
+import getValidationErrors from '../../utils/getValidationErrors';
 import { Container, Content, Background } from './styles';
 import logoImg from '../../assets/logo.svg';
 
@@ -30,7 +30,7 @@ const SignUp: React.FC = () => {
         abortEarly: false,
       });
     } catch (err) {
-      const errors = getValidationErros(err);
+      const errors = getValidationErrors(err);
 
       formRef.current?.setErrors(errors);
     }
