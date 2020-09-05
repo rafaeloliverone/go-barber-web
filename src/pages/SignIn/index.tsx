@@ -11,7 +11,8 @@ import logoImg from '../../assets/logo.svg';
 import Button from '../../components/Button/index';
 import Input from '../../components/Input/index';
 
-import { useAuth } from '../../hooks/AuthContext';
+import { useAuth } from '../../hooks/auth';
+import { useToast } from '../../hooks/toast';
 import getValidationErrors from '../../utils/getValidationErrors';
 
 interface SignInformData {
@@ -23,6 +24,8 @@ const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
   const { signIn } = useAuth();
+
+  const { addToast } = useToast();
 
   const handleSubmit = useCallback(
     async (data: SignInformData) => {
@@ -40,7 +43,7 @@ const SignIn: React.FC = () => {
           abortEarly: false,
         });
 
-        signIn({
+        await signIn({
           email: data.email,
           password: data.password,
         });
@@ -51,10 +54,11 @@ const SignIn: React.FC = () => {
           formRef.current?.setErrors(errors);
         }
 
+        addToast();
         // disparar toast
       }
     },
-    [signIn],
+    [signIn, addToast],
   );
 
   return (
